@@ -1,0 +1,21 @@
+{
+  "name": "srspu-schedule-calendar-gen",
+  "version": "1.0.0",
+  "description": "Calendar generator for SRSPU NPI schedule",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Morozyuk Daniil",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@popperjs/core": "^2.11.6",
+    "@vue/compiler-sfc": "^3.2.45",
+    "axios": "^1.2.1",
+    "bootstrap": "^5.2.3",
+    "vue": "^3.2.45",
+    "vue-loader": "^17.0.1",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
+  }
+}

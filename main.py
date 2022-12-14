@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from flask import Flask, render_template, request, abort
-from .core import create_calendar
-from .api import get_faculties, get_student_schedule, get_student_finals
+from modules.core import create_calendar
+from modules.api import get_faculties, get_student_schedule, get_student_finals
 app = Flask(__name__)
 
 @app.route('/')

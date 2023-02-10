@@ -12,6 +12,7 @@ def create_lesson_event(last_updated, class_types, class_ints, lesson, day):
     event.add('dtstart', pytz.timezone('Europe/Moscow').localize(datetime.strptime(f"{day} {class_ints[str(lesson['class'])]['start']}", '%Y-%m-%d %H:%M')))
     event.add('dtend', pytz.timezone('Europe/Moscow').localize(datetime.strptime(f"{day} {class_ints[str(lesson['class'])]['end']}", '%Y-%m-%d %H:%M')))
     event.add('location', lesson['auditorium'])
+    event.add('organizer', lesson['lecturer'])
     return event
 
 def create_final_event(last_updated, class_types, class_ints, lesson, day):
@@ -22,6 +23,7 @@ def create_final_event(last_updated, class_types, class_ints, lesson, day):
     event.add('dtstart', pytz.timezone('Europe/Moscow').localize(datetime.strptime(f"{day} {lesson['start']}", '%Y-%m-%d %H:%M')))
     event.add('dtend', pytz.timezone('Europe/Moscow').localize(datetime.strptime(f"{day} {lesson['end']}", '%Y-%m-%d %H:%M')))
     event.add('location', lesson['auditorium'])
+    event.add('organizer', lesson['lecturer'])
     return event
 
 def create_calendar(schedule, schedule_type):

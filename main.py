@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import base64, urllib.parse
 from flask import Flask, render_template, request, abort
 from modules.core import create_calendar
 from modules.api import get_faculties, get_student_schedule, get_student_finals
@@ -11,7 +12,7 @@ def index():
 
 @app.route('/generate/ics/classes')
 def classes_generate():
-    faculty, year, group = request.args.get('faculty'), request.args.get('year'), request.args.get('group')
+    faculty, year, group = request.args.get('faculty'), request.args.get('year'), urllib.parse.quote_from_bytes(base64.decodebytes(request.args.get('group').encode('utf-8')))
     try:
         schedule = get_student_schedule(faculty_id=faculty, year=year, group_id=group)
         calendar = create_calendar(schedule, 'classes')
@@ -23,7 +24,7 @@ def classes_generate():
 
 @app.route('/generate/ics/finals')
 def finals_generate():
-    faculty, year, group = request.args.get('faculty'), request.args.get('year'), request.args.get('group')
+    faculty, year, group = request.args.get('faculty'), request.args.get('year'), urllib.parse.quote_from_bytes(base64.decodebytes(request.args.get('group').encode('utf-8')))
     try:
         schedule = get_student_finals(faculty_id=faculty, year=year, group_id=group)
         calendar = create_calendar(schedule, 'finals')

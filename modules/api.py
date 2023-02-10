@@ -25,7 +25,7 @@ def get_faculties():
     return result
 
 def get_student_schedule(faculty_id, year, group_id):
-    uri = f'https://schedule.npi-tu.ru/api/v1/faculties/{faculty_id}/years/{year}/groups/{urllib.parse.quote(group_id)}/schedule'
+    uri = f'https://schedule.npi-tu.ru/api/v1/faculties/{faculty_id}/years/{year}/groups/{group_id}/schedule'
     request = requests.get(uri)
     result = request.json()
     return result

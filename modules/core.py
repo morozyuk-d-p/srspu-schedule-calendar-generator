@@ -8,22 +8,20 @@ def create_lesson_event(last_updated, class_types, class_ints, lesson, day):
     event = Event()
     event.add('uid', uuid.uuid4())
     event.add('dtstamp', pytz.timezone('Europe/Moscow').localize(datetime.strptime(last_updated, '%Y-%m-%d')))
-    event.add('summary', f'{class_types[lesson["type"]]["name"] if lesson["type"] != "-" else ""} "{lesson["discipline"]}"')
+    event.add('summary', f'{class_types[lesson["type"]]["name"] if lesson["type"] != "-" else ""} "{lesson["discipline"]}" [{lesson["lecturer"]}]')
     event.add('dtstart', pytz.timezone('Europe/Moscow').localize(datetime.strptime(f"{day} {class_ints[str(lesson['class'])]['start']}", '%Y-%m-%d %H:%M')))
     event.add('dtend', pytz.timezone('Europe/Moscow').localize(datetime.strptime(f"{day} {class_ints[str(lesson['class'])]['end']}", '%Y-%m-%d %H:%M')))
     event.add('location', lesson['auditorium'])
-    event.add('organizer', lesson['lecturer'])
     return event
 
 def create_final_event(last_updated, class_types, class_ints, lesson, day):
     event = Event()
     event.add('uid', uuid.uuid4())
     event.add('dtstamp', pytz.timezone('Europe/Moscow').localize(datetime.strptime(last_updated, '%Y-%m-%d')))
-    event.add('summary', f'{class_types[lesson["type"]]["name"] if lesson["type"] != "-" else ""} "{lesson["discipline"]}"')
+    event.add('summary', f'{class_types[lesson["type"]]["name"] if lesson["type"] != "-" else ""} "{lesson["discipline"]}" [{lesson["lecturer"]}]')
     event.add('dtstart', pytz.timezone('Europe/Moscow').localize(datetime.strptime(f"{day} {lesson['start']}", '%Y-%m-%d %H:%M')))
     event.add('dtend', pytz.timezone('Europe/Moscow').localize(datetime.strptime(f"{day} {lesson['end']}", '%Y-%m-%d %H:%M')))
     event.add('location', lesson['auditorium'])
-    event.add('organizer', lesson['lecturer'])
     return event
 
 def create_calendar(schedule, schedule_type):
@@ -70,7 +68,12 @@ def create_calendar(schedule, schedule_type):
 if __name__ == '__main__':
     faculty = input('Введите код факультета: ')
     year = int(input('Введите курс: '))
-    group = input('введите шифр группы: ')
+    group = input('Введите шифр группы: ')
+    mode_num = int(input('Введите номер режима:\n1) Занятия\n2) Экзамены\nОтвет: '))
+    if mode_num == 1:
+        mode = 'classes'
+    elif mode_num == 2:
+        mode = 'finals'
     schedule = get_student_schedule(faculty, year, group)
-    cal = create_calendar(schedule)
+    cal = create_calendar(schedule, mode)
     print(cal.to_ical().decode().replace('\r\n', '\n').strip())
